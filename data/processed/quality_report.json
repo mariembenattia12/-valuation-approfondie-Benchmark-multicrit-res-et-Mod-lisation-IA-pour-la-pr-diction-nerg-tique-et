@@ -1,0 +1,827 @@
+{
+  "input_path": "/kaggle/input/datasets/mariembenattia/supcom-sinert-raw-data/SINERT_DATA_CONCENTRATOR",
+  "meter": "EM_VIRTUAL",
+  "files_read": 684,
+  "raw_rows_read": 129420,
+  "invalid_timestamps_dropped": 0,
+  "duplicate_timestamps_dropped": 3753,
+  "raw_missing_values": {
+    "cumulative_active_kwh": 3516,
+    "pmax_kw": 3515,
+    "cumulative_reactive_kvarh": 3516,
+    "smax_kva": 3515
+  },
+  "raw_missing_percent": {
+    "cumulative_active_kwh": 2.7167,
+    "pmax_kw": 2.716,
+    "cumulative_reactive_kvarh": 2.7167,
+    "smax_kva": 2.716
+  },
+  "raw_measurement_quality": {
+    "cumulative_active_kwh": {
+      "missing_values": 3022,
+      "missing_percent": 2.4048,
+      "first_valid_timestamp": "2022-06-28T00:00:00",
+      "last_valid_timestamp": "2026-01-31T23:45:00",
+      "longest_missing_runs": [
+        {
+          "start": "2022-06-01T00:00:00",
+          "end": "2022-06-27T23:45:00",
+          "steps": 2592,
+          "duration_hours": 648.0
+        },
+        {
+          "start": "2024-08-06T10:15:00",
+          "end": "2024-08-07T09:15:00",
+          "steps": 93,
+          "duration_hours": 23.25
+        },
+        {
+          "start": "2023-06-11T09:00:00",
+          "end": "2023-06-11T12:45:00",
+          "steps": 16,
+          "duration_hours": 4.0
+        },
+        {
+          "start": "2023-09-20T01:30:00",
+          "end": "2023-09-20T05:15:00",
+          "steps": 16,
+          "duration_hours": 4.0
+        },
+        {
+          "start": "2022-07-24T02:30:00",
+          "end": "2022-07-24T05:45:00",
+          "steps": 14,
+          "duration_hours": 3.5
+        },
+        {
+          "start": "2022-07-26T15:15:00",
+          "end": "2022-07-26T18:30:00",
+          "steps": 14,
+          "duration_hours": 3.5
+        },
+        {
+          "start": "2024-09-08T08:45:00",
+          "end": "2024-09-08T11:30:00",
+          "steps": 12,
+          "duration_hours": 3.0
+        },
+        {
+          "start": "2025-12-07T09:15:00",
+          "end": "2025-12-07T11:45:00",
+          "steps": 11,
+          "duration_hours": 2.75
+        },
+        {
+          "start": "2023-06-17T15:30:00",
+          "end": "2023-06-17T17:45:00",
+          "steps": 10,
+          "duration_hours": 2.5
+        },
+        {
+          "start": "2026-01-30T04:45:00",
+          "end": "2026-01-30T07:00:00",
+          "steps": 10,
+          "duration_hours": 2.5
+        }
+      ]
+    },
+    "pmax_kw": {
+      "missing_values": 3021,
+      "missing_percent": 2.404,
+      "first_valid_timestamp": "2022-06-28T00:00:00",
+      "last_valid_timestamp": "2026-01-31T23:45:00",
+      "longest_missing_runs": [
+        {
+          "start": "2022-06-01T00:00:00",
+          "end": "2022-06-27T23:45:00",
+          "steps": 2592,
+          "duration_hours": 648.0
+        },
+        {
+          "start": "2024-08-06T10:15:00",
+          "end": "2024-08-07T09:15:00",
+          "steps": 93,
+          "duration_hours": 23.25
+        },
+        {
+          "start": "2023-06-11T09:00:00",
+          "end": "2023-06-11T12:45:00",
+          "steps": 16,
+          "duration_hours": 4.0
+        },
+        {
+          "start": "2023-09-20T01:30:00",
+          "end": "2023-09-20T05:15:00",
+          "steps": 16,
+          "duration_hours": 4.0
+        },
+        {
+          "start": "2022-07-24T02:30:00",
+          "end": "2022-07-24T05:45:00",
+          "steps": 14,
+          "duration_hours": 3.5
+        },
+        {
+          "start": "2022-07-26T15:15:00",
+          "end": "2022-07-26T18:30:00",
+          "steps": 14,
+          "duration_hours": 3.5
+        },
+        {
+          "start": "2024-09-08T08:45:00",
+          "end": "2024-09-08T11:30:00",
+          "steps": 12,
+          "duration_hours": 3.0
+        },
+        {
+          "start": "2025-12-07T09:15:00",
+          "end": "2025-12-07T11:45:00",
+          "steps": 11,
+          "duration_hours": 2.75
+        },
+        {
+          "start": "2023-06-17T15:30:00",
+          "end": "2023-06-17T17:45:00",
+          "steps": 10,
+          "duration_hours": 2.5
+        },
+        {
+          "start": "2026-01-30T04:45:00",
+          "end": "2026-01-30T07:00:00",
+          "steps": 10,
+          "duration_hours": 2.5
+        }
+      ]
+    },
+    "cumulative_reactive_kvarh": {
+      "missing_values": 3022,
+      "missing_percent": 2.4048,
+      "first_valid_timestamp": "2022-06-28T00:00:00",
+      "last_valid_timestamp": "2026-01-31T23:45:00",
+      "longest_missing_runs": [
+        {
+          "start": "2022-06-01T00:00:00",
+          "end": "2022-06-27T23:45:00",
+          "steps": 2592,
+          "duration_hours": 648.0
+        },
+        {
+          "start": "2024-08-06T10:15:00",
+          "end": "2024-08-07T09:15:00",
+          "steps": 93,
+          "duration_hours": 23.25
+        },
+        {
+          "start": "2023-06-11T09:00:00",
+          "end": "2023-06-11T12:45:00",
+          "steps": 16,
+          "duration_hours": 4.0
+        },
+        {
+          "start": "2023-09-20T01:30:00",
+          "end": "2023-09-20T05:15:00",
+          "steps": 16,
+          "duration_hours": 4.0
+        },
+        {
+          "start": "2022-07-24T02:30:00",
+          "end": "2022-07-24T05:45:00",
+          "steps": 14,
+          "duration_hours": 3.5
+        },
+        {
+          "start": "2022-07-26T15:15:00",
+          "end": "2022-07-26T18:30:00",
+          "steps": 14,
+          "duration_hours": 3.5
+        },
+        {
+          "start": "2024-09-08T08:45:00",
+          "end": "2024-09-08T11:30:00",
+          "steps": 12,
+          "duration_hours": 3.0
+        },
+        {
+          "start": "2025-12-07T09:15:00",
+          "end": "2025-12-07T11:45:00",
+          "steps": 11,
+          "duration_hours": 2.75
+        },
+        {
+          "start": "2023-06-17T15:30:00",
+          "end": "2023-06-17T17:45:00",
+          "steps": 10,
+          "duration_hours": 2.5
+        },
+        {
+          "start": "2026-01-30T04:45:00",
+          "end": "2026-01-30T07:00:00",
+          "steps": 10,
+          "duration_hours": 2.5
+        }
+      ]
+    },
+    "smax_kva": {
+      "missing_values": 3021,
+      "missing_percent": 2.404,
+      "first_valid_timestamp": "2022-06-28T00:00:00",
+      "last_valid_timestamp": "2026-01-31T23:45:00",
+      "longest_missing_runs": [
+        {
+          "start": "2022-06-01T00:00:00",
+          "end": "2022-06-27T23:45:00",
+          "steps": 2592,
+          "duration_hours": 648.0
+        },
+        {
+          "start": "2024-08-06T10:15:00",
+          "end": "2024-08-07T09:15:00",
+          "steps": 93,
+          "duration_hours": 23.25
+        },
+        {
+          "start": "2023-06-11T09:00:00",
+          "end": "2023-06-11T12:45:00",
+          "steps": 16,
+          "duration_hours": 4.0
+        },
+        {
+          "start": "2023-09-20T01:30:00",
+          "end": "2023-09-20T05:15:00",
+          "steps": 16,
+          "duration_hours": 4.0
+        },
+        {
+          "start": "2022-07-24T02:30:00",
+          "end": "2022-07-24T05:45:00",
+          "steps": 14,
+          "duration_hours": 3.5
+        },
+        {
+          "start": "2022-07-26T15:15:00",
+          "end": "2022-07-26T18:30:00",
+          "steps": 14,
+          "duration_hours": 3.5
+        },
+        {
+          "start": "2024-09-08T08:45:00",
+          "end": "2024-09-08T11:30:00",
+          "steps": 12,
+          "duration_hours": 3.0
+        },
+        {
+          "start": "2025-12-07T09:15:00",
+          "end": "2025-12-07T11:45:00",
+          "steps": 11,
+          "duration_hours": 2.75
+        },
+        {
+          "start": "2023-06-17T15:30:00",
+          "end": "2023-06-17T17:45:00",
+          "steps": 10,
+          "duration_hours": 2.5
+        },
+        {
+          "start": "2026-01-30T04:45:00",
+          "end": "2026-01-30T07:00:00",
+          "steps": 10,
+          "duration_hours": 2.5
+        }
+      ]
+    }
+  },
+  "rows_after_timestamp_deduplication": 125667,
+  "off_grid_timestamps_dropped": 0,
+  "grid_start": "2022-06-01T00:00:00",
+  "grid_end": "2026-02-01T00:00:00",
+  "grid_rows": 128737,
+  "grid_intervals_missing_from_source": 3070,
+  "longest_source_gaps": [
+    {
+      "start": "2025-08-01T00:15:00",
+      "end": "2025-08-31T23:45:00",
+      "steps": 2975
+    },
+    {
+      "start": "2023-04-29T00:15:00",
+      "end": "2023-04-29T23:45:00",
+      "steps": 95
+    }
+  ],
+  "counter_resets": {
+    "active": 0,
+    "reactive": 0
+  },
+  "active_counter_stuck_intervals_flagged": 0,
+  "active_counter_stuck_rule": "At least 4 repeated cumulative readings while Pmax > 1 kW; the first post-plateau difference is also marked missing.",
+  "negative_demand_values_replaced_with_missing": {
+    "pmax_kw": 0,
+    "smax_kva": 0
+  },
+  "suspicious_zero_measurements_not_removed": {
+    "zero_active_energy_with_active_demand": 0,
+    "zero_apparent_demand_with_active_demand": 0
+  },
+  "active_demand_greater_than_apparent_demand_not_removed": 0,
+  "physical_missing_before_imputation": {
+    "delta_ea_kwh": 6311,
+    "delta_er_kvarh": 6311,
+    "pmax_kw": 6091,
+    "smax_kva": 6091
+  },
+  "physical_missing_before_imputation_percent": {
+    "delta_ea_kwh": 4.9022,
+    "delta_er_kvarh": 4.9022,
+    "pmax_kw": 4.7314,
+    "smax_kva": 4.7314
+  },
+  "physical_quality_before_imputation": {
+    "delta_ea_kwh": {
+      "missing_values": 6311,
+      "missing_percent": 4.9022,
+      "first_valid_timestamp": "2022-06-28T00:15:00",
+      "last_valid_timestamp": "2026-01-31T23:45:00",
+      "longest_missing_runs": [
+        {
+          "start": "2025-08-01T00:00:00",
+          "end": "2025-09-01T00:00:00",
+          "steps": 2977,
+          "duration_hours": 744.25
+        },
+        {
+          "start": "2022-06-01T00:00:00",
+          "end": "2022-06-28T00:00:00",
+          "steps": 2593,
+          "duration_hours": 648.25
+        },
+        {
+          "start": "2023-04-29T00:00:00",
+          "end": "2023-04-30T00:00:00",
+          "steps": 97,
+          "duration_hours": 24.25
+        },
+        {
+          "start": "2024-08-06T10:15:00",
+          "end": "2024-08-07T09:30:00",
+          "steps": 94,
+          "duration_hours": 23.5
+        },
+        {
+          "start": "2023-06-11T09:00:00",
+          "end": "2023-06-11T13:00:00",
+          "steps": 17,
+          "duration_hours": 4.25
+        },
+        {
+          "start": "2023-09-20T01:30:00",
+          "end": "2023-09-20T05:30:00",
+          "steps": 17,
+          "duration_hours": 4.25
+        },
+        {
+          "start": "2022-07-24T02:30:00",
+          "end": "2022-07-24T06:00:00",
+          "steps": 15,
+          "duration_hours": 3.75
+        },
+        {
+          "start": "2022-07-26T15:15:00",
+          "end": "2022-07-26T18:45:00",
+          "steps": 15,
+          "duration_hours": 3.75
+        },
+        {
+          "start": "2024-09-08T08:45:00",
+          "end": "2024-09-08T11:45:00",
+          "steps": 13,
+          "duration_hours": 3.25
+        },
+        {
+          "start": "2025-12-07T09:15:00",
+          "end": "2025-12-07T12:00:00",
+          "steps": 12,
+          "duration_hours": 3.0
+        }
+      ]
+    },
+    "delta_er_kvarh": {
+      "missing_values": 6311,
+      "missing_percent": 4.9022,
+      "first_valid_timestamp": "2022-06-28T00:15:00",
+      "last_valid_timestamp": "2026-01-31T23:45:00",
+      "longest_missing_runs": [
+        {
+          "start": "2025-08-01T00:00:00",
+          "end": "2025-09-01T00:00:00",
+          "steps": 2977,
+          "duration_hours": 744.25
+        },
+        {
+          "start": "2022-06-01T00:00:00",
+          "end": "2022-06-28T00:00:00",
+          "steps": 2593,
+          "duration_hours": 648.25
+        },
+        {
+          "start": "2023-04-29T00:00:00",
+          "end": "2023-04-30T00:00:00",
+          "steps": 97,
+          "duration_hours": 24.25
+        },
+        {
+          "start": "2024-08-06T10:15:00",
+          "end": "2024-08-07T09:30:00",
+          "steps": 94,
+          "duration_hours": 23.5
+        },
+        {
+          "start": "2023-06-11T09:00:00",
+          "end": "2023-06-11T13:00:00",
+          "steps": 17,
+          "duration_hours": 4.25
+        },
+        {
+          "start": "2023-09-20T01:30:00",
+          "end": "2023-09-20T05:30:00",
+          "steps": 17,
+          "duration_hours": 4.25
+        },
+        {
+          "start": "2022-07-24T02:30:00",
+          "end": "2022-07-24T06:00:00",
+          "steps": 15,
+          "duration_hours": 3.75
+        },
+        {
+          "start": "2022-07-26T15:15:00",
+          "end": "2022-07-26T18:45:00",
+          "steps": 15,
+          "duration_hours": 3.75
+        },
+        {
+          "start": "2024-09-08T08:45:00",
+          "end": "2024-09-08T11:45:00",
+          "steps": 13,
+          "duration_hours": 3.25
+        },
+        {
+          "start": "2025-12-07T09:15:00",
+          "end": "2025-12-07T12:00:00",
+          "steps": 12,
+          "duration_hours": 3.0
+        }
+      ]
+    },
+    "pmax_kw": {
+      "missing_values": 6091,
+      "missing_percent": 4.7314,
+      "first_valid_timestamp": "2022-06-28T00:00:00",
+      "last_valid_timestamp": "2026-01-31T23:45:00",
+      "longest_missing_runs": [
+        {
+          "start": "2025-08-01T00:00:00",
+          "end": "2025-08-31T23:45:00",
+          "steps": 2976,
+          "duration_hours": 744.0
+        },
+        {
+          "start": "2022-06-01T00:00:00",
+          "end": "2022-06-27T23:45:00",
+          "steps": 2592,
+          "duration_hours": 648.0
+        },
+        {
+          "start": "2023-04-29T00:00:00",
+          "end": "2023-04-29T23:45:00",
+          "steps": 96,
+          "duration_hours": 24.0
+        },
+        {
+          "start": "2024-08-06T10:15:00",
+          "end": "2024-08-07T09:15:00",
+          "steps": 93,
+          "duration_hours": 23.25
+        },
+        {
+          "start": "2023-06-11T09:00:00",
+          "end": "2023-06-11T12:45:00",
+          "steps": 16,
+          "duration_hours": 4.0
+        },
+        {
+          "start": "2023-09-20T01:30:00",
+          "end": "2023-09-20T05:15:00",
+          "steps": 16,
+          "duration_hours": 4.0
+        },
+        {
+          "start": "2022-07-24T02:30:00",
+          "end": "2022-07-24T05:45:00",
+          "steps": 14,
+          "duration_hours": 3.5
+        },
+        {
+          "start": "2022-07-26T15:15:00",
+          "end": "2022-07-26T18:30:00",
+          "steps": 14,
+          "duration_hours": 3.5
+        },
+        {
+          "start": "2024-09-08T08:45:00",
+          "end": "2024-09-08T11:30:00",
+          "steps": 12,
+          "duration_hours": 3.0
+        },
+        {
+          "start": "2025-12-07T09:15:00",
+          "end": "2025-12-07T11:45:00",
+          "steps": 11,
+          "duration_hours": 2.75
+        }
+      ]
+    },
+    "smax_kva": {
+      "missing_values": 6091,
+      "missing_percent": 4.7314,
+      "first_valid_timestamp": "2022-06-28T00:00:00",
+      "last_valid_timestamp": "2026-01-31T23:45:00",
+      "longest_missing_runs": [
+        {
+          "start": "2025-08-01T00:00:00",
+          "end": "2025-08-31T23:45:00",
+          "steps": 2976,
+          "duration_hours": 744.0
+        },
+        {
+          "start": "2022-06-01T00:00:00",
+          "end": "2022-06-27T23:45:00",
+          "steps": 2592,
+          "duration_hours": 648.0
+        },
+        {
+          "start": "2023-04-29T00:00:00",
+          "end": "2023-04-29T23:45:00",
+          "steps": 96,
+          "duration_hours": 24.0
+        },
+        {
+          "start": "2024-08-06T10:15:00",
+          "end": "2024-08-07T09:15:00",
+          "steps": 93,
+          "duration_hours": 23.25
+        },
+        {
+          "start": "2023-06-11T09:00:00",
+          "end": "2023-06-11T12:45:00",
+          "steps": 16,
+          "duration_hours": 4.0
+        },
+        {
+          "start": "2023-09-20T01:30:00",
+          "end": "2023-09-20T05:15:00",
+          "steps": 16,
+          "duration_hours": 4.0
+        },
+        {
+          "start": "2022-07-24T02:30:00",
+          "end": "2022-07-24T05:45:00",
+          "steps": 14,
+          "duration_hours": 3.5
+        },
+        {
+          "start": "2022-07-26T15:15:00",
+          "end": "2022-07-26T18:30:00",
+          "steps": 14,
+          "duration_hours": 3.5
+        },
+        {
+          "start": "2024-09-08T08:45:00",
+          "end": "2024-09-08T11:30:00",
+          "steps": 12,
+          "duration_hours": 3.0
+        },
+        {
+          "start": "2025-12-07T09:15:00",
+          "end": "2025-12-07T11:45:00",
+          "steps": 11,
+          "duration_hours": 2.75
+        }
+      ]
+    }
+  },
+  "imputation": {
+    "delta_ea_kwh": {
+      "linear_interpolation_short_gap": 410,
+      "prior_day_or_week": 3012,
+      "unresolved": 2889
+    },
+    "delta_er_kvarh": {
+      "linear_interpolation_short_gap": 410,
+      "prior_day_or_week": 3012,
+      "unresolved": 2889
+    },
+    "pmax_kw": {
+      "linear_interpolation_short_gap": 230,
+      "prior_day_or_week": 2980,
+      "unresolved": 2881
+    },
+    "smax_kva": {
+      "linear_interpolation_short_gap": 230,
+      "prior_day_or_week": 2980,
+      "unresolved": 2881
+    }
+  },
+  "imputed_values_total": 13264,
+  "rolling_outlier_flags_not_removed": {
+    "delta_ea_kwh": {
+      "flagged_not_removed": 902,
+      "scorable_intervals": 123547,
+      "not_scorable_insufficient_history": 5190
+    },
+    "delta_er_kvarh": {
+      "flagged_not_removed": 6647,
+      "scorable_intervals": 123547,
+      "not_scorable_insufficient_history": 5190
+    },
+    "pmax_kw": {
+      "flagged_not_removed": 893,
+      "scorable_intervals": 123550,
+      "not_scorable_insufficient_history": 5187
+    },
+    "smax_kva": {
+      "flagged_not_removed": 856,
+      "scorable_intervals": 123550,
+      "not_scorable_insufficient_history": 5187
+    }
+  },
+  "outlier_detection_method": "Trailing 672-step median and MAD; 8 robust scales, or a fallback threshold of max(10% of the median magnitude, 0.01) when MAD is zero. Flags are reported, not automatically removed.",
+  "physical_missing_after_imputation": {
+    "delta_ea_kwh": 2889,
+    "delta_er_kvarh": 2889,
+    "pmax_kw": 2881,
+    "smax_kva": 2881
+  },
+  "physical_quality_after_imputation": {
+    "delta_ea_kwh": {
+      "missing_values": 2889,
+      "missing_percent": 2.2441,
+      "first_valid_timestamp": "2022-06-28T00:15:00",
+      "last_valid_timestamp": "2026-02-01T00:00:00",
+      "longest_missing_runs": [
+        {
+          "start": "2022-06-01T00:00:00",
+          "end": "2022-06-28T00:00:00",
+          "steps": 2593,
+          "duration_hours": 648.25
+        },
+        {
+          "start": "2025-08-29T00:00:00",
+          "end": "2025-09-01T00:00:00",
+          "steps": 289,
+          "duration_hours": 72.25
+        },
+        {
+          "start": "2022-06-28T13:00:00",
+          "end": "2022-06-28T14:00:00",
+          "steps": 5,
+          "duration_hours": 1.25
+        },
+        {
+          "start": "2025-08-22T00:00:00",
+          "end": "2025-08-22T00:15:00",
+          "steps": 2,
+          "duration_hours": 0.5
+        }
+      ]
+    },
+    "delta_er_kvarh": {
+      "missing_values": 2889,
+      "missing_percent": 2.2441,
+      "first_valid_timestamp": "2022-06-28T00:15:00",
+      "last_valid_timestamp": "2026-02-01T00:00:00",
+      "longest_missing_runs": [
+        {
+          "start": "2022-06-01T00:00:00",
+          "end": "2022-06-28T00:00:00",
+          "steps": 2593,
+          "duration_hours": 648.25
+        },
+        {
+          "start": "2025-08-29T00:00:00",
+          "end": "2025-09-01T00:00:00",
+          "steps": 289,
+          "duration_hours": 72.25
+        },
+        {
+          "start": "2022-06-28T13:00:00",
+          "end": "2022-06-28T14:00:00",
+          "steps": 5,
+          "duration_hours": 1.25
+        },
+        {
+          "start": "2025-08-22T00:00:00",
+          "end": "2025-08-22T00:15:00",
+          "steps": 2,
+          "duration_hours": 0.5
+        }
+      ]
+    },
+    "pmax_kw": {
+      "missing_values": 2881,
+      "missing_percent": 2.2379,
+      "first_valid_timestamp": "2022-06-28T00:00:00",
+      "last_valid_timestamp": "2026-02-01T00:00:00",
+      "longest_missing_runs": [
+        {
+          "start": "2022-06-01T00:00:00",
+          "end": "2022-06-27T23:45:00",
+          "steps": 2592,
+          "duration_hours": 648.0
+        },
+        {
+          "start": "2025-08-29T00:00:00",
+          "end": "2025-08-31T23:45:00",
+          "steps": 288,
+          "duration_hours": 72.0
+        },
+        {
+          "start": "2025-08-22T00:00:00",
+          "end": "2025-08-22T00:00:00",
+          "steps": 1,
+          "duration_hours": 0.25
+        }
+      ]
+    },
+    "smax_kva": {
+      "missing_values": 2881,
+      "missing_percent": 2.2379,
+      "first_valid_timestamp": "2022-06-28T00:00:00",
+      "last_valid_timestamp": "2026-02-01T00:00:00",
+      "longest_missing_runs": [
+        {
+          "start": "2022-06-01T00:00:00",
+          "end": "2022-06-27T23:45:00",
+          "steps": 2592,
+          "duration_hours": 648.0
+        },
+        {
+          "start": "2025-08-29T00:00:00",
+          "end": "2025-08-31T23:45:00",
+          "steps": 288,
+          "duration_hours": 72.0
+        },
+        {
+          "start": "2025-08-22T00:00:00",
+          "end": "2025-08-22T00:00:00",
+          "steps": 1,
+          "duration_hours": 0.25
+        }
+      ]
+    }
+  },
+  "rows_with_any_imputed_physical_value": 3427,
+  "imputed_values_by_column": {
+    "delta_ea_kwh": 3422,
+    "delta_er_kvarh": 3422,
+    "pmax_kw": 3210,
+    "smax_kva": 3210
+  },
+  "rows_with_unresolved_physical_missing": 2889,
+  "unresolved_physical_missing_percent_of_grid": 2.2441,
+  "window_features": [
+    "delta_ea_kwh",
+    "delta_er_kvarh",
+    "pmax_kw",
+    "smax_kva",
+    "hour_sin",
+    "hour_cos",
+    "weekday_sin",
+    "weekday_cos",
+    "month_sin",
+    "month_cos",
+    "is_nonworking_day"
+  ],
+  "target_columns": [
+    "delta_ea_kwh",
+    "delta_er_kvarh",
+    "pmax_kw",
+    "smax_kva"
+  ],
+  "calendar_note": "is_nonworking_day is true on Saturdays, Sundays, and supplied holiday dates.",
+  "window_configuration": {
+    "window_steps": 672,
+    "horizon_steps": 1,
+    "train_fraction": 0.7,
+    "validation_fraction": 0.15,
+    "test_fraction": 0.15000000000000005,
+    "valid_windows_by_split": {
+      "train": 86103,
+      "validation": 19193,
+      "test": 15539
+    },
+    "windows_excluded_for_imputed_targets": 2524
+  },
+  "window_index_file": "window_index.parquet",
+  "clean_data_file": "sinert_clean.parquet"
+}
