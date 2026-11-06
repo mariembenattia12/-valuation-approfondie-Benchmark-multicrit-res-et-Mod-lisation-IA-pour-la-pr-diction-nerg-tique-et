@@ -1,0 +1,2 @@
+compteur,energie_totale_kwh,energie_moyenne_par_creneau_kwh,pmax_moyenne_kw,pmax_mediane_kw,charge_base_5e_percentile_kw,pmax_max_kw,heure_pmax_max,smax_max_kva,seuil_pic_90e_percentile_kw,duree_totale_pics_heures,seuil_activite_important_kw,duree_active_seuil_1kw_heures_moyenne
+EM_VIRTUAL,1877941.7999999996,14.922301506579362,59.65940372330282,48.95,21.33,290.25,2025-09-01 14:30:00,301.17,108.51,3147.25,30,23.970083841463413
