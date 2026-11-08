@@ -1,5 +1,5 @@
 {
-  "input_path": "/kaggle/input/datasets/mariembenattia/supcom-sinert-raw-data/SINERT_DATA_CONCENTRATOR",
+  "input_path": "data\\SINERT_DATA_CONCENTRATOR",
   "meter": "EM_VIRTUAL",
   "files_read": 684,
   "raw_rows_read": 129420,
@@ -321,7 +321,9 @@
   },
   "suspicious_zero_measurements_not_removed": {
     "zero_active_energy_with_active_demand": 0,
-    "zero_apparent_demand_with_active_demand": 0
+    "zero_apparent_demand_with_active_demand": 0,
+    "zero_pmax_with_positive_active_energy": 36,
+    "zero_smax_with_positive_active_energy": 36
   },
   "active_demand_greater_than_apparent_demand_not_removed": 0,
   "physical_missing_before_imputation": {
@@ -823,5 +825,69 @@
     "windows_excluded_for_imputed_targets": 2524
   },
   "window_index_file": "window_index.parquet",
-  "clean_data_file": "sinert_clean.parquet"
+  "window_validation": {
+    "window_count": 120835,
+    "configured_window_steps": 672,
+    "configured_horizon_steps": 1,
+    "feature_count": 11,
+    "features": "delta_ea_kwh,delta_er_kvarh,pmax_kw,smax_kva,hour_sin,hour_cos,weekday_sin,weekday_cos,month_sin,month_cos,is_nonworking_day",
+    "regular_15_minute_grid": true,
+    "lookback_length_valid": true,
+    "horizon_length_valid": true,
+    "split_boundaries_valid": true,
+    "target_timestamps_disjoint": true,
+    "targets_exclude_imputations": true,
+    "no_future_imputation_reference": true
+  },
+  "clean_data_file": "sinert_clean.parquet",
+  "behavior_report_files": {
+    "directory": "reports",
+    "files": [
+      "activity_by_day.csv",
+      "behavior_by_group.csv",
+      "behavior_summary.csv",
+      "coverage_by_month.csv",
+      "coverage_by_year.csv",
+      "coverage_summary.csv",
+      "energy_annual.csv",
+      "energy_daily.csv",
+      "energy_monthly.csv",
+      "energy_weekly.csv",
+      "missing_imputation_quality.csv",
+      "missing_runs.csv",
+      "peak_episodes.csv",
+      "reactive_outlier_summary.csv",
+      "reactive_outliers.csv",
+      "suspect_power_zeros.csv",
+      "window_validation.csv"
+    ]
+  },
+  "visualization_files": [
+    "figures/coverage_by_month.svg",
+    "figures/coverage_by_year.svg",
+    "figures/pmax_daily_mean.svg",
+    "figures/delta_ea_kwh_daily.svg",
+    "figures/delta_er_kvarh_daily.svg",
+    "figures/pmax_kw_daily.svg",
+    "figures/smax_kva_daily.svg"
+  ],
+  "behavior_calendar": {
+    "provided": true,
+    "file": "data\\calendar_daily_features.csv",
+    "labelled_days_in_data": 129,
+    "holiday_labels_available": true,
+    "vacation_labels_available": true,
+    "study_week_labels_available": false,
+    "label_confidence_days": {
+      "medium": 108,
+      "high": 21
+    },
+    "calendar_source_ids": [
+      "SC_ESTIMATE",
+      "SC_MINISTRY_REPORTED",
+      "SC_NATIONAL_FIXED",
+      "SC_PRESS_PROBABLE",
+      "SC_SECONDARY"
+    ]
+  }
 }
