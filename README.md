@@ -1,138 +1,23 @@
 # Analyse SINERT — phase 1
 
-Ce dépôt contient le pipeline de préparation des données de la personne A et
-l'analyse du comportement énergétique réalisée par la personne B.
+Ce dépôt contient le pipeline reproductible d'ingestion, de nettoyage,
+d'imputation, d'analyse comportementale et de préparation des fenêtres
+d'apprentissage pour le compteur `EM_VIRTUAL`.
 
-## Travail réalisé par la personne B
+## Données et confidentialité
 
-L'analyse a été menée dans Kaggle à partir du fichier propre produit par le
-pipeline A (`sinert_clean.parquet`). Le compteur étudié est `EM_VIRTUAL`, avec
-une mesure toutes les 15 minutes sur la période du 1er juin 2022 au
-1er février 2026.
+Les exports énergétiques, le calendrier institutionnel source, le contrat et
+les résultats dérivés sont des fichiers locaux et ne sont pas versionnés. Le
+fichier `.gitignore` exclut les données brutes et les sorties locales afin
+d'éviter leur publication accidentelle. Fournir ces fichiers localement avant
+d'exécuter le pipeline.
 
-### 1. Contrôle de la qualité
-
-Le fichier propre contient 128 737 intervalles et 18 colonnes. Le pas temporel
-est régulier et vaut 15 minutes pour les 128 736 différences observées.
-Les variables physiques analysées sont :
-
-- `delta_ea_kwh` : énergie active consommée pendant un intervalle ;
-- `delta_er_kvarh` : énergie réactive consommée pendant un intervalle ;
-- `pmax_kw` : puissance active maximale ;
-- `smax_kva` : puissance apparente maximale.
-
-Après nettoyage, environ 2,24 % des valeurs physiques restent manquantes et
-3 427 lignes contiennent au moins une valeur imputée. Les valeurs manquantes
-restantes ne sont pas remplacées arbitrairement par zéro.
-
-### 2. Visualisations
-
-Les séries temporelles des quatre variables physiques ont été visualisées pour
-repérer les tendances, les périodes de faible activité et les pointes. Les
-valeurs imputées ont également été distinguées afin de ne pas les confondre
-avec des mesures originales.
-
-Un profil moyen par créneau horaire de 15 minutes et une carte de chaleur
-`jour de la semaine × heure` ont été produits. Les maxima du profil journalier
-moyen sont :
-
-- énergie active : 18,82 kWh à 11:15 ;
-- puissance active : 75,21 kW à 11:30 ;
-- puissance apparente : 78,93 kVA à 11:30.
-
-Les minima moyens apparaissent autour de 04:30–05:15, mais la consommation ne
-tombe pas à zéro : il s'agit d'une charge de fond.
-
-### 3. Énergie cumulée par période
-
-La colonne `delta_ea_kwh` a été agrégée par jour, semaine, mois et année. Les
-valeurs `<NA>` indiquent qu'aucune mesure valide n'était disponible ; elles ne
-signifient pas une consommation nulle.
-
-Les premières journées de juin 2022 sont incomplètes. Février 2026 est
-également incomplet et ne doit pas être comparé directement aux années
-complètes. Les totaux annuels observés sont :
-
-| Année | Énergie active |
-|---|---:|
-| 2022 | 347 169,3 kWh, période partielle |
-| 2023 | 434 651,8 kWh |
-| 2024 | 517 674,8 kWh |
-| 2025 | 545 959,9 kWh |
-| 2026 | 32 486,0 kWh, période partielle |
-
-### 4. Charge de base et pointes
-
-La charge de base est décrite par le minimum absolu et par le 5e percentile,
-qui est plus robuste aux valeurs extrêmes. Les pointes sont définies comme les
-créneaux dont `pmax_kw` est supérieur ou égal au 90e percentile. Ainsi, les
-10 % de créneaux les plus élevés sont étudiés comme des périodes de pointe.
-
-Un créneau correspond à une mesure de 15 minutes. Un épisode de pointe est une
-suite de créneaux de pointe consécutifs. Le fichier
-`reports/peak_episodes.csv` contient, pour chaque épisode, son début, sa fin,
-sa puissance maximale, son nombre de créneaux et sa durée en heures.
-
-Cette méthode distingue une pointe isolée d'une pointe prolongée et évite de
-définir le comportement du site à partir d'un seul maximum exceptionnel.
-
-### 5. Comparaison des périodes
-
-Les jours sont séparés avec `is_nonworking_day` :
-
-- `0` : jour ouvré ;
-- `1` : samedi, dimanche ou jour férié fourni.
-
-Les moyennes, médianes, écarts-types, variances, minima et maxima de l'énergie,
-de `pmax_kw` et de `smax_kva` ont été comparés entre jours ouvrés et non
-ouvrés. Les vacances et semaines d'études n'ont pas été inventées, car leur
-calendrier officiel n'était pas fourni.
-
-### 6. Analyse saisonnière
-
-Les mois ont été regroupés en quatre saisons. Les moyennes par créneau de
-15 minutes sont :
-
-| Saison | Énergie moyenne | Pmax moyenne | Smax moyenne |
-|---|---:|---:|---:|
-| Été | 20,87 kWh | 83,41 kW | 87,69 kVA |
-| Automne | 18,46 kWh | 73,83 kW | 77,24 kVA |
-| Hiver | 9,59 kWh | 38,33 kW | 40,94 kVA |
-| Printemps | 9,41 kWh | 37,62 kW | 41,40 kVA |
-
-L'été est donc la saison présentant l'activité moyenne la plus élevée.
-L'utilisation accrue de la climatisation est une hypothèse possible, mais elle
-devrait être confirmée par des données météorologiques ou d'occupation.
-
-### 7. Activation et désactivation
-
-Avec un seuil de 1 kW, 99,95 % des créneaux sont actifs. Le site possède donc
-une charge de fond presque permanente ; ce seuil ne permet pas d'identifier
-l'occupation humaine. Des seuils complémentaires ont été testés :
-
-| Seuil | Créneaux au-dessus du seuil |
-|---|---:|
-| 1 kW | 99,95 % |
-| 10 kW | 99,94 % |
-| 30 kW | 79,38 % |
-| 50 kW | 48,81 % |
-| 70 kW | 30,96 % |
-
-Le seuil de 1 kW est donc interprété comme un indicateur de charge minimale.
-Les seuils de 30, 50 et 70 kW décrivent mieux les niveaux d'activité
-importante. L'heure d'activation/désactivation calculée avec 1 kW est presque
-toujours 00:00–23:45, avec une durée active moyenne de 23,97 heures par jour ;
-cela ne signifie pas que le site est occupé 24 heures sur 24.
-
-### Livrables de l'analyse B
-
-- `analyse-personne-b.ipynb` : notebook d'analyse ;
-- `figures/` : graphiques produits ;
-- `reports/` : tableaux statistiques exportés, dont
-  `peak_episodes.csv`.
-
-Les fichiers Parquet détaillés et les données brutes restent dans Kaggle et ne
-doivent pas être publiés dans GitHub s'ils sont volumineux ou confidentiels.
+Le calendrier quotidien conserve les dates confirmées et les événements de
+confiance limitée séparément. Les estimations ne sont pas traitées comme des
+faits. Les cellules inconnues restent vides; les comparaisons par semaines
+d'études ou examens ne sont possibles que si ces dates sont documentées.
+Consulter le rapport qualité généré localement avant d'interpréter les résultats
+ou d'entraîner un modèle.
 
 ## Pipeline de préparation de la personne A
 
@@ -188,11 +73,37 @@ ZIP sont attachés, sélectionne celui voulu dans la cellule de configuration.
 - `--window-steps 672` : sept jours d'historique à 96 pas par jour.
 - `--horizon-steps 1` : horizon par défaut d'un pas de 15 minutes. À confirmer
   avec les encadrantes; la valeur est configurable.
-- `--holidays chemin.csv` : calendrier optionnel avec une colonne `date`
-  (ou une première colonne de dates). Sans fichier, seuls les week-ends sont
-  marqués comme non ouvrés.
-- `--max-short-gap 4` : durée maximale d'un petit trou comblé par report causal
-  une interpolation linéaire entre les mesures valides qui l'encadrent.
+- `--calendar chemin.csv` ou `chemin.xlsx` : calendrier quotidien optionnel
+  avec une colonne `date` et les indicateurs `is_holiday`, `is_vacation`,
+  `is_study_week` et/ou `is_exam_period`. Sans fichier, seuls les week-ends
+  sont marqués comme non ouvrés. `--holidays` reste accepté pour compatibilité.
+- `--max-short-gap 4` : nombre maximal de pas manquants interpolés linéairement
+  entre deux mesures valides. Les trous plus longs utilisent un créneau antérieur
+  comparable si disponible.
+
+Le calendrier quotidien est converti depuis le classeur fourni
+`data/calendrier_complete_SUPCOM_2022-2027.xlsx`. Il couvre automatiquement
+les dates du Parquet SINERT déjà préparé. Pour le régénérer puis relancer le
+pipeline avec les données brutes :
+
+```powershell
+python .\pipeline.py --input .\data\SINERT_DATA_CONCENTRATOR `
+  --output .\data\processed
+python .\build_calendar.py --supcom-workbook `
+  .\data\calendrier_complete_SUPCOM_2022-2027.xlsx
+python .\pipeline.py --input .\data\SINERT_DATA_CONCENTRATOR `
+  --output .\data\processed --calendar .\data\calendar_daily_features.csv
+```
+
+`calendar_events.csv` conserve toutes les lignes du classeur, y compris les
+estimations. `calendar_sources.csv` retranscrit les catégories de provenance
+indiquées dans sa légende; aucune URL absente du classeur n'est inventée.
+Seuls les événements de confiance moyenne ou élevée alimentent les indicateurs
+de calendrier des rapports et la variable `is_nonworking_day`. Les événements
+estimés/hypothétiques restent visibles dans les tables événementielles, mais
+ne sont pas assimilés à des faits. Les semaines d'études restent inconnues :
+le classeur n'en définit aucune. Les périodes non renseignées ne sont pas
+étiquetées « non-vacances ».
 
 ## Résultats
 
@@ -204,8 +115,72 @@ ZIP sont attachés, sélectionne celui voulu dans la cellule de configuration.
   chevauchantes ne sont pas dupliquées, ce qui évite de produire plusieurs Go
   de données redondantes.
 - `quality_report.json` : fichiers lus, doublons, trous, remises à zéro,
-  valeurs de demande négatives, imputations, anomalies signalées et nombre de
-  fenêtres par partition.
+  valeurs de demande négatives, imputations, anomalies signalées, nombre de
+  fenêtres par partition et disponibilité/confiance des étiquettes du
+  calendrier.
+- `reports/energy_daily.csv`, `energy_weekly.csv`, `energy_monthly.csv` et
+  `energy_annual.csv` : énergie active estimée (mesures + imputations), énergie
+  mesurée seulement, nombres de mesures observées/imputées et couverture
+  réellement mesurée par période. Une période sans mesure valide reste vide,
+  elle n'est pas présentée comme une consommation nulle.
+- `reports/behavior_summary.csv` : minimum et heure du minimum, 5e percentile,
+  maximum et heure du maximum pour chaque grandeur physique, statistiques
+  globales, seuil/durée des pointes et statistiques circulaires des heures
+  d'activation/désactivation (moyenne, écart-type et variance circulaires).
+- `reports/behavior_by_group.csv` : moyennes, médianes, écarts-types et
+  variances par jour ouvré/week-end et par saison, avec le nombre de lignes
+  imputées. Les événements de vacances, examens et jours fériés sont ventilés
+  seulement lorsque le calendrier les documente avec une confiance suffisante;
+  les semaines d'études non renseignées ne sont pas extrapolées.
+- `reports/activity_by_day.csv` : couverture, créneaux actifs, horaires
+  d'activation/désactivation, durée active et statistiques journalières.
+- `reports/peak_episodes.csv` : épisodes consécutifs au-dessus du 90e
+  percentile de Pmax, avec début, fin exclusive, durée, Pmax/Smax et énergie.
+  Une mesure manquante interrompt un épisode.
+- `reports/coverage_by_month.csv`, `coverage_by_year.csv` et
+  `coverage_summary.csv` : couverture mesurée, énergie observée et énergie
+  incluant les imputations. Les périodes partielles sont signalées et ne
+  doivent pas être comparées comme des périodes complètes.
+- `reports/suspect_power_zeros.csv`, `reactive_outliers.csv`,
+  `missing_imputation_quality.csv` et `missing_runs.csv` : détails des zéros
+  suspects, anomalies robustes, imputations et lacunes restantes. Ces alertes
+  sont conservées pour vérification; elles ne signifient pas que les mesures
+  ont été automatiquement corrigées.
+- `reports/window_validation.csv` : audit des fenêtres, de leurs frontières
+  chronologiques, de la séparation des cibles et de la fuite potentielle
+  d'information issue des imputations.
+- `figures/` : graphiques SVG reproductibles de couverture mensuelle/annuelle
+  et séries temporelles journalières mesurées des quatre grandeurs physiques.
+
+Les horaires d'activation/désactivation sont estimés avec un seuil par défaut
+de 1 kW. Ils décrivent le franchissement d'un seuil de puissance et ne prouvent
+pas l'occupation humaine du site. Les heures moyennes sont calculées de façon
+circulaire pour gérer correctement le passage de minuit.
+
+Pour les analyses institutionnelles, fournir un CSV/XLSX quotidien avec une colonne
+`date` et, selon les informations disponibles, `is_holiday`, `is_vacation`,
+`is_study_week` et `is_exam_period`. Les indicateurs acceptent `true/false`, `1/0`, `yes/no` ou
+`oui/non`; les dates ISO (`2024-09-02`) et jour/mois/année sont acceptées. Une
+ligne par date est requise. Laisser une cellule vide lorsque l'information
+n'est pas connue; ne pas coder une hypothèse en `no`. Exemple :
+
+```csv
+date,is_holiday,is_vacation,is_study_week,is_exam_period
+2024-09-02,,yes,,
+2024-09-03,,yes,,
+```
+
+Le classeur fourni distingue les événements confirmés par SUP'COM, les dates
+ministérielles rapportées, les sources secondaires et les estimations. Les
+estimations et hypothèses ne servent pas aux calculs; les URL primaires,
+semaines d'études, vacances d'été et périodes d'activité complètes restent à
+confirmer avec la scolarité.
+Les 7 variables calendaires du modèle restent inchangées; vacances et semaines
+d'études servent ici aux rapports d'analyse, pas aux entrées d'apprentissage.
+Les étiquettes d'examens sont également réservées aux rapports et ne changent
+pas les 11 variables du modèle. Passer le calendrier avec `--calendar`;
+`--holidays` reste accepté pour compatibilité avec les anciens fichiers de
+dates fériées.
 
 Pour fournir des tableaux NumPy aux modèles sans matérialiser toutes les
 fenêtres en mémoire :
@@ -261,11 +236,34 @@ for x, y, target_times in iter_window_batches(clean, split="train"):
   historiques peuvent, elles, contenir des valeurs imputées.
 - Les sept variables calendaires sont les sin/cos de l'heure, du jour de la
   semaine et du mois, ainsi qu'un indicateur week-end/jour férié. Les jours
-  fériés nécessitent le fichier optionnel, car les dates de vacances/examens de
-  SUP'COM ne sont pas fournies.
+  fériés nécessitent le fichier optionnel. Les indicateurs de vacances,
+  d'examens et de semaines d'études, eux aussi optionnels, enrichissent les
+  tableaux d'analyse sans modifier les 11 variables d'apprentissage.
 
 ## Vérification
 
 ```powershell
 python -m unittest .\test_pipeline.py
 ```
+
+## État de validation de la phase 1
+
+L'exécution sur les exports bruts, avec le calendrier extrait du classeur
+SUP'COM, est terminée. Les 7 graphiques SVG, les rapports, le Parquet propre,
+l'index de fenêtres et `quality_report.json` ont été régénérés sous
+`data/processed/`. Les 19 tests automatisés passent.
+
+L'audit des fenêtres confirme les 672 pas d'historique, 11 variables,
+l'horizon configuré, les frontières chronologiques, l'absence de cibles
+imputées et l'absence de référence future causée par l'interpolation. La
+qualité des mesures reste à valider métier : les 61 créneaux de puissance nulle
+et 6 647 anomalies robustes d'énergie réactive sont signalés, non supprimés
+automatiquement. Les couvertures mesurées sont d'environ 99,2 % en 2023,
+99,4 % en 2024 et 91,1 % en 2025; les périodes partielles et imputées doivent
+être prises en compte lors des comparaisons.
+
+Le calendrier quotidien contient 1 342 dates sans doublon. Les catégories
+incertaines restent traçables dans `calendar_events.csv`, mais ne sont pas
+utilisées pour les analyses. La scolarité doit confirmer les estimations,
+fournir les semaines d'études et compléter les sources primaires pour permettre
+des comparaisons universitaires plus solides.

@@ -1,0 +1,11 @@
+__pycache__/
+*.py[cod]
+
+# Local energy-meter data and derived outputs
+data/SINERT_DATA_CONCENTRATOR/
+data/processed/
+data/contrat_mt.pdf
+data/calendrier_complete_SUPCOM_2022-2027.xlsx
+data/calendar_*.csv
+reports/*.csv
+figures/*.svg
