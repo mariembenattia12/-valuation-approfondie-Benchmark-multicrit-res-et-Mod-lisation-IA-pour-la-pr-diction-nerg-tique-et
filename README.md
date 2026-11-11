@@ -129,7 +129,8 @@ cela ne signifie pas que le site est occupé 24 heures sur 24.
 - `analyse-personne-b.ipynb` : notebook d'analyse ;
 - `figures/` : graphiques produits ;
 - `reports/` : tableaux statistiques exportés, dont
-  `peak_episodes.csv`.
+  `peak_episodes.csv`, ainsi que l'interprétation finale dans
+  `interpretation_personne_b.md`.
 
 Les fichiers Parquet détaillés et les données brutes restent dans Kaggle et ne
 doivent pas être publiés dans GitHub s'ils sont volumineux ou confidentiels.
