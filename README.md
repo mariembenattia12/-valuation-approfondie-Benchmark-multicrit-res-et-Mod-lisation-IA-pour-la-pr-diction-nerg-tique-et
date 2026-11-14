@@ -8,12 +8,12 @@ l'analyse du comportement énergétique réalisée par la personne B.
 L'analyse a été menée dans Kaggle à partir du fichier propre produit par le
 pipeline A (`sinert_clean.parquet`). Le compteur étudié est `EM_VIRTUAL`, avec
 une mesure toutes les 15 minutes sur la période du 1er juin 2022 au
-1er février 2026.
+1er mars 2026.
 
 ### 1. Contrôle de la qualité
 
-Le fichier propre contient 128 737 intervalles et 18 colonnes. Le pas temporel
-est régulier et vaut 15 minutes pour les 128 736 différences observées.
+Le fichier propre contient 131 425 intervalles et 18 colonnes. Le pas temporel
+est régulier et vaut 15 minutes pour les 131 424 différences observées.
 Les variables physiques analysées sont :
 
 - `delta_ea_kwh` : énergie active consommée pendant un intervalle ;
@@ -21,8 +21,8 @@ Les variables physiques analysées sont :
 - `pmax_kw` : puissance active maximale ;
 - `smax_kva` : puissance apparente maximale.
 
-Après nettoyage, environ 2,24 % des valeurs physiques restent manquantes et
-3 427 lignes contiennent au moins une valeur imputée. Les valeurs manquantes
+Après nettoyage, environ 2,19 % des valeurs physiques restent manquantes et
+3 401 lignes contiennent au moins une valeur imputée. Les valeurs manquantes
 restantes ne sont pas remplacées arbitrairement par zéro.
 
 ### 2. Visualisations
