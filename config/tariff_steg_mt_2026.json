@@ -1,0 +1,54 @@
+{
+  "currency": "TND",
+  "source_documents": [
+    "doc/contrat_mt (1).pdf",
+    "doc/Facture Steg 09-2026 (1).pdf"
+  ],
+  "official_tariff_reference": "https://www.steg.com.tn/fr/page/tarifs-moyenne-tension",
+  "tariff_mode": "uniforme_facture",
+  "vat_rate": 0.19,
+  "municipal_surcharge_tnd_per_kwh": 0.010,
+  "power_charge_tnd_per_kw_month": 5.0,
+  "excess_reduction_rate": 0.10,
+  "energy_prices_tnd_per_kwh": {
+    "full": 0.291,
+    "peak_morning": 0.291,
+    "peak_evening": 0.291,
+    "offpeak": 0.291
+  },
+  "tariff_note": "Tarif uniforme confirmé par l'image fournie : 291 millimes/kWh. Les postes horaires du contrat restent documentés mais ne sont pas utilisés pour la facture SUP'COM.",
+  "schedule": {
+    "winter_months": [9, 10, 11, 12, 1, 2, 3, 4, 5],
+    "summer_months": [6, 7, 8],
+    "winter_full": ["07:00", "18:00"],
+    "winter_peak_evening": ["18:00", "21:00"],
+    "winter_offpeak": ["21:00", "07:00"],
+    "summer_full_1": ["06:30", "08:30"],
+    "summer_peak_morning": ["08:30", "13:30"],
+    "summer_full_2": ["13:30", "19:00"],
+    "summer_peak_evening": ["19:00", "22:00"],
+    "summer_offpeak": ["22:00", "06:30"],
+    "sunday": "offpeak"
+  },
+  "subscribed_power_kw": 600.0,
+  "invoice_reference": {
+    "invoice_number": "61096187",
+    "month": "2026-09",
+    "tariff_mode": "uniforme_facture",
+    "active_energy_kwh": 101065.0,
+    "reactive_energy_kvarh": 38162.0,
+    "subscribed_power_kw": 600.0,
+    "maximum_demand_kw": 358.0,
+    "power_factor": 0.94,
+    "energy_price_tnd_per_kwh": 0.291,
+    "power_fee_tnd": 3000.0,
+    "power_factor_bonus_tnd": -588.198,
+    "total_before_tax_tnd": 28821.717,
+    "vat_energy_tnd": 5476.126,
+    "vat_power_tnd": 570.0,
+    "municipal_surcharge_tnd": 1010.650,
+    "rit_charge_tnd": 3.500,
+    "net_to_pay_tnd": 38881.993,
+    "observed_municipal_surcharge_tnd_per_kwh": 0.010
+  }
+}
