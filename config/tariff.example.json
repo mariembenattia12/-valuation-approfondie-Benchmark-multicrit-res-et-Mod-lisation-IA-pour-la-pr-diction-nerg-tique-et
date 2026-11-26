@@ -1,0 +1,9 @@
+{
+  "currency": "TND",
+  "peak_price": null,
+  "full_price": null,
+  "offpeak_price": null,
+  "subscribed_power_price": null,
+  "power_factor_threshold": 0.9,
+  "power_factor_penalty_rate": null
+}
