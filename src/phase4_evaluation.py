@@ -43,53 +43,7 @@ def _r2(y_true: np.ndarray, y_pred: np.ndarray) -> float:
     return float(1 - np.sum((y_true - y_pred) ** 2) / denominator)
 
 
-def _parameter_estimates() -> pd.DataFrame:
-    """Retourne les paramètres calculables depuis l'architecture Phase 2.
-
-    Ces valeurs sont des estimations déterministes de ``model.count_params()``
-    pour les architectures du notebook. Les modèles classiques restent NA car
-    leurs objets entraînés n'ont pas été exportés.
-    """
-
-    features = 11
-    hidden = 64
-    dense_head = hidden * hidden + hidden
-    output_head = hidden * 4 + 4
-    estimates = {
-        "LSTM": 4 * (features + hidden + 1) * hidden + dense_head + output_head,
-        "BiLSTM": 2 * (4 * (features + 32 + 1) * 32) + dense_head + output_head,
-        "GRU": 3 * (features + hidden + 1) * hidden + dense_head + output_head,
-        "CNN1D": (7 * features * hidden + hidden) + (5 * hidden * hidden + hidden) + dense_head + output_head,
-        "ResNet1D_TCN": (
-            features * hidden + hidden
-            + 4 * (2 * (3 * hidden * hidden + hidden) + 4 * hidden)
-            + dense_head
-            + output_head
-        ),
-        "Transformer": (
-            features * hidden + hidden
-            + 4 * (hidden * hidden + hidden)
-            + 4 * hidden
-            + (hidden * 128 + 128)
-            + (128 * hidden + hidden)
-            + dense_head
-            + output_head
-        ),
-        "CNN_LSTM": (5 * features * hidden + hidden) + 4 * (hidden + hidden + 1) * hidden + dense_head + output_head,
-    }
-    return pd.DataFrame(
-        [
-            {
-                "model": model,
-                "parameter_count": count,
-                "parameter_source": "architecture_estimate",
-            }
-            for model, count in estimates.items()
-        ]
-    )
-
-
-def _load_resources(phase2_dir: Path) -> pd.DataFrame:
+def _load_resources(phase2_dir: Path, models: list[str]) -> pd.DataFrame:
     candidates = sorted(
         phase2_dir.glob("benchmark_resource_usage*.csv"),
         key=lambda path: (path.stat().st_mtime, path.name),
@@ -102,11 +56,16 @@ def _load_resources(phase2_dir: Path) -> pd.DataFrame:
                 resources["parameter_source"] = "phase2_export"
             return resources
 
-    resources = _parameter_estimates()
-    resources["training_time_seconds"] = np.nan
-    resources["training_time_source"] = "not_exported_by_phase2"
-    resources["resource_status"] = "partial_parameters_only"
-    return resources
+    return pd.DataFrame(
+        {
+            "model": models,
+            "parameter_count": np.nan,
+            "parameter_source": "not_exported_by_phase2",
+            "training_time_seconds": np.nan,
+            "training_time_source": "not_exported_by_phase2",
+            "resource_status": "not_exported",
+        }
+    )
 
 
 def _normalise(values: pd.Series, *, higher_is_better: bool) -> pd.Series:
@@ -141,6 +100,7 @@ def run_phase4(project_root: str | Path = ".") -> dict[str, pd.DataFrame]:
             y_true = y_true[valid]
             y_pred = y_pred[valid]
             mape, mape_count = _mape_without_zero(y_true, y_pred)
+            peak_mask = y_true >= np.quantile(y_true, 0.90)
             detail_rows.append(
                 {
                     "model": model,
@@ -151,8 +111,8 @@ def run_phase4(project_root: str | Path = ".") -> dict[str, pd.DataFrame]:
                     "mae": float(np.mean(np.abs(y_true - y_pred))),
                     "rmse": float(np.sqrt(np.mean((y_true - y_pred) ** 2))),
                     "r2": _r2(y_true, y_pred),
-                    "real_peak": float(np.max(y_true)),
-                    "predicted_peak": float(np.max(y_pred)),
+                    "real_peak_p90_mean": float(np.mean(y_true[peak_mask])),
+                    "predicted_peak_p90_mean": float(np.mean(y_pred[peak_mask])),
                 }
             )
 
@@ -170,8 +130,8 @@ def run_phase4(project_root: str | Path = ".") -> dict[str, pd.DataFrame]:
 
     peak = detail.loc[detail["target"].isin(["Pmax", "Smax"])].copy()
     peak["pde_pct"] = (
-        (peak["predicted_peak"] - peak["real_peak"]).abs()
-        / peak["real_peak"].abs().clip(lower=1e-12)
+        (peak["predicted_peak_p90_mean"] - peak["real_peak_p90_mean"]).abs()
+        / peak["real_peak_p90_mean"].abs().clip(lower=1e-12)
         * 100
     )
     peak_wide = peak.pivot(index="model", columns="target", values="pde_pct").reset_index()
@@ -193,7 +153,7 @@ def run_phase4(project_root: str | Path = ".") -> dict[str, pd.DataFrame]:
         how="left",
     )
 
-    resources = _load_resources(phase2_dir)
+    resources = _load_resources(phase2_dir, aggregate["model"].tolist())
     resources.to_csv(output_dir / "phase4_ressources.csv", index=False)
     aggregate = aggregate.merge(resources, on="model", how="left")
 
@@ -205,6 +165,10 @@ def run_phase4(project_root: str | Path = ".") -> dict[str, pd.DataFrame]:
         "mae": False,
         "r2": True,
     }
+    resource_criteria = ["training_time_seconds", "parameter_count"]
+    for column in resource_criteria:
+        if column in aggregate and aggregate[column].notna().all():
+            criteria[column] = False
     for column, higher_is_better in criteria.items():
         aggregate[f"score_{column}"] = _normalise(
             aggregate[column], higher_is_better=higher_is_better
@@ -248,10 +212,12 @@ def run_phase4(project_root: str | Path = ".") -> dict[str, pd.DataFrame]:
         "split": "test",
         "models": sorted(test["model"].unique().tolist()),
         "criteria_used_for_ranking": list(criteria),
-        "resource_criteria_excluded": ["parameter_count", "training_time_seconds"],
+        "resource_criteria_excluded": [
+            column for column in resource_criteria if column not in criteria
+        ],
         "resource_note": (
-            "Les durées d'entraînement ne sont pas présentes dans les exports Phase 2. "
-            "Les paramètres des réseaux sont des estimations d'architecture ; les modèles classiques sont NA."
+            "Training time enters the ranking when available for every model. "
+            "Parameter count is excluded when classical-model values are not comparable or unavailable."
         ),
     }
     (output_dir / "phase4_configuration.json").write_text(

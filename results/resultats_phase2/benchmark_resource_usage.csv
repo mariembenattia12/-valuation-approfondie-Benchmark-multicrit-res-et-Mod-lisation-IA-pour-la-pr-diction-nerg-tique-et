@@ -1,0 +1,9 @@
+model,parameter_count,parameter_source,training_time_seconds,training_time_source
+LSTM,21668.0,keras_count_params,4567.369066238403,recorded_during_training
+BiLSTM,13476.0,keras_count_params,1655.5131793022156,recorded_during_training
+GRU,16996.0,keras_count_params,4406.237993240356,recorded_during_training
+TCN,36804.0,keras_count_params,3879.102701663971,recorded_during_training
+XGBoost,,not_comparable_classical_model,17.923881769180298,recorded_during_training
+SVR,,not_comparable_classical_model,137.518404006958,recorded_during_training
+Naive_J-1,0.0,no_trainable_parameters,0.0,no_training_step
+Naive_S-1,0.0,no_trainable_parameters,0.0,no_training_step
